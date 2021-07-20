@@ -1,0 +1,96 @@
+<script>
+hexo.extend.filter.register('after_generate', function (locals) {
+    // 首先获取整体的配置项名称
+    const config = hexo.config.artitalk || hexo.theme.config.artitalk
+    // 如果配置开启
+    if (!(config && config.enable.card)) return
+    // 集体声明配置项
+      const card_data = {
+        page_enable: config.enable.page ? config.enable.page : false,
+        enable_page: config.enable_page ? config.enable_page : "all",
+        layout_type: config.layout.type,
+        layout_name: config.layout.name,
+        layout_index: config.layout.index ? config.layout.index : 0,
+        path: config.path ? config.path : "artitalk",
+        exclude: config.exclude ? config.exclude : "/artitalk/",
+        appId: config.appId,
+        appKey: config.appKey,
+        option: config.option ? JSON.stringify(config.option) : false,
+        js: config.js ? urlFor(config.js) : 'https://cdn.jsdelivr.net/npm/artitalk'
+      }
+    // 渲染页面
+    const temple_html_text = config.temple_html ? config.temple_html : pug.renderFile(path.join(__dirname, './lib/card.pug'),card_data)
+  
+    //cdn资源声明
+      //样式资源
+    const css_text = `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-butterfly-artitalk-pro/lib/card.css" media="defer" onload="this.media='all'">`
+      //脚本资源
+    const js_text = `<script async src="https://cdn.jsdelivr.net/npm/hexo-butterfly-artitalk-pro/lib/card_visual.js"></script>`
+  
+    //注入容器声明
+    var get_layout
+    //若指定为class类型的容器
+    if (card_data.layout_type === 'class') {
+      //则根据class类名及序列获取容器
+      get_layout = `document.getElementsByClassName('${card_data.layout_name}')[${card_data.layout_index}]`
+    }
+    // 若指定为id类型的容器
+    else if (card_data.layout_type === 'id') {
+      // 直接根据id获取容器
+      get_layout = `document.getElementById('${card_data.layout_name}')`
+    }
+    // 若未指定容器类型，默认使用id查询
+    else {
+      get_layout = `document.getElementById('${card_data.layout_name}')`
+    }
+    // 挂载容器脚本
+    // 此处还在挂载脚本后面附上了artitalk初始化函数。
+    var user_info_js = `<script data-pjax>
+    function ${pluginname}_injector_config(){
+      var parent_div_git = ${get_layout};
+      var item_html = '${temple_html_text}';
+      console.log('已挂载${pluginname}');
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html);
+      (()=>{
+        const init = () => {
+          new Artitalk(Object.assign({
+            appId: '${card_data.appId}',
+            appKey: '${card_data.appKey}',
+          }, ${card_data.option} ))
+        }
+        if (typeof Artitalk === 'function') {
+          init()
+        } else {
+          getScript('${card_data.js}').then(init)
+        }
+      })()
+      }
+    var elist = '${card_data.exclude}'.split(',');
+    var cpage = location.pathname;
+    var epage = '${card_data.enable_page}';
+    var flag = 0;
+  
+    for (var i=0;i<elist.length;i++){
+      if (cpage.includes(elist[i])){
+        flag++;
+      }
+    }
+  
+    if ((epage ==='all')&&(flag == 0)){
+      ${pluginname}_injector_config();
+    }
+    else if (epage === cpage){
+      ${pluginname}_injector_config();
+    }
+    </script>`
+    // 注入用户脚本
+    // 此处利用挂载容器实现了二级注入
+    hexo.extend.injector.register('body_end', user_info_js, "default");
+    // 注入脚本资源
+    hexo.extend.injector.register('body_end', js_text, "default");
+    // 注入样式资源
+    hexo.extend.injector.register('head_end', css_text, "default");
+  },
+  
+  )
+</script>
