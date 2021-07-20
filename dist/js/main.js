@@ -4,7 +4,7 @@ function get_data(url, callback, extra) {
     xmlHttp.send(null);
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-            if (typeof extra === "function")
+            if (extra)
                 callback(JSON.parse(xmlHttp.responseText), extra);
             else
                 callback(JSON.parse(xmlHttp.responseText));
