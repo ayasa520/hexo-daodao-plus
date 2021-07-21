@@ -48,4 +48,4 @@ daodao_plus:
 
 ![image](https://cdn.jsdelivr.net/gh/ayasa520/img@main/0469b9627d2384e678b0a72872f0e0f0.png)
 
-![image-20210721175549888](D:\project\gitpage\hexo\node_modules\hexo-daodao-plus\database_design\image-20210721175549888.png)
+![image](https://cdn.jsdelivr.net/gh/ayasa520/img@main/3c049c61ec20f85ec6b29ba9275b5161.png)
