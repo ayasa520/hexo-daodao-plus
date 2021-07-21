@@ -2,6 +2,8 @@
 
 适用于 hexo 框架的插件, 添加了首页说说和页面说说. 参考了[NPM插件的开发 | Akilarの糖果屋](https://akilar.top/posts/e44fb560/), JavaScript 和 CSS 代码参考了 [Rock-Candy-Tea/daodao (github.com)](https://github.com/Rock-Candy-Tea/daodao) , 非常感谢 [Akilarの糖果屋 - Akilar.top](https://akilar.top/) 和 [小冰博客 - 做个有梦想的人！ (zfe.space)](https://zfe.space/) 
 
+如果需要配置后端，请参考 [ayasa520/daodao-kai: 叨叨改，用 flask 重写叨叨的后端 (github.com)](https://github.com/ayasa520/daodao-kai) 和 [基于 Vercel 和 MongoDB 的叨叨·改 | 极东魔术昼寝结社 (bilibilianime.com)](https://www.bilibilianime.com/2021/07/18/daodao-kai/)
+
 ## 安装
 
 在 hexo 博客根目录运行 npm 命令
