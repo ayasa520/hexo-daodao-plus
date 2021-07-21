@@ -50,10 +50,11 @@ function common_injector(name, item_config, temple_html_text, js_text, css_text)
             }
         }</script>`
     }
-    hexo.extend.injector.register('body_end', user_info_js, "default");
     if (js_text !== '') {
         hexo.extend.injector.register('body_end', js_text, "default");
     }
+
+    hexo.extend.injector.register('body_end', user_info_js, "default");
     if (css_text !== '') {
         hexo.extend.injector.register('head_end', css_text, "default");
     }
@@ -72,11 +73,11 @@ const card_data ={path:config.path};
 let temple_html_text = pug.renderFile(path.join(__dirname, './lib/card.pug'),card_data)
 
 if(hexo.config.swiper && hexo.config.swiper.enable){
-    var js_text =``
+    var js_text =`<script  src="${config.CDN.js}"></script>`
     var css_text =`<link rel="stylesheet" href="${config.CDN.css}">`;
 }else{
     var css_text =`<link rel="stylesheet" href="${config.CDN.css}"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">`;
-    var js_text =`<script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>`
+    var js_text =`<script  src="${config.CDN.js}"></script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>`
 
 }
 temple_html_text =temple_html_text .replace(/\n|\r/g,"")
@@ -84,9 +85,9 @@ common_injector('daodao_plus', config,temple_html_text,js_text,css_text)
 
 
 },  hexo.extend.helper.register('priority', function(){
-// 过滤器优先级，priority 值越低，过滤器会越早执行，默认priority是10
-const pre_priority = hexo.config.daodao_plus.priority || hexo.theme.config.daodao_plus.priority
-const priority = pre_priority ? pre_priority : 10
+// 过滤器优先级，priority 值越低，过滤器会越早执行，默认priority是0
+var pre_priority = hexo.config.daodao_plus.priority || hexo.theme.config.daodao_plus.priority
+const priority = pre_priority ? pre_priority : 0
 return priority
 }))
 

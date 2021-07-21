@@ -27,7 +27,7 @@ function daodao_page_init(url, template_html, extra) {
             sec.className = "timeline page-1";
             sec.innerHTML = html;
             document.getElementById("bber").appendChild(sec);
-            if(extra)
+            if(typeof extra === "function")
                 extra();
         }
         if (template !== 'function') {

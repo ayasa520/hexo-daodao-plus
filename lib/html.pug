@@ -16,9 +16,8 @@ script(data-pjax).
     }
     if (typeof daodao_page_init === 'function')
     {
-        daodao_init(function(){document.getElementById('loading').style.display="none";});       
+        daodao_init(function(){document.getElementById('loading').style.display="none";if(window.location.href.indexOf('#')!=-1)window.location.href=window.location.href});       
     }
     else{
-        getScript('#{js}').then(function(){ daodao_init(document.getElementById('loading').style.display="none")});
-
+        getScript('#{js}').then(function(){daodao_init(function(){document.getElementById('loading').style.display="none";if(window.location.href.indexOf('#')!=-1)window.location.href=window.location.href})});     
     }
