@@ -1,96 +1,155 @@
-<script>
-hexo.extend.filter.register('after_generate', function (locals) {
-    // 首先获取整体的配置项名称
-    const config = hexo.config.artitalk || hexo.theme.config.artitalk
-    // 如果配置开启
-    if (!(config && config.enable.card)) return
-    // 集体声明配置项
-      const card_data = {
-        page_enable: config.enable.page ? config.enable.page : false,
-        enable_page: config.enable_page ? config.enable_page : "all",
-        layout_type: config.layout.type,
-        layout_name: config.layout.name,
-        layout_index: config.layout.index ? config.layout.index : 0,
-        path: config.path ? config.path : "artitalk",
-        exclude: config.exclude ? config.exclude : "/artitalk/",
-        appId: config.appId,
-        appKey: config.appKey,
-        option: config.option ? JSON.stringify(config.option) : false,
-        js: config.js ? urlFor(config.js) : 'https://cdn.jsdelivr.net/npm/artitalk'
-      }
-    // 渲染页面
-    const temple_html_text = config.temple_html ? config.temple_html : pug.renderFile(path.join(__dirname, './lib/card.pug'),card_data)
-  
-    //cdn资源声明
-      //样式资源
-    const css_text = `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-butterfly-artitalk-pro/lib/card.css" media="defer" onload="this.media='all'">`
-      //脚本资源
-    const js_text = `<script async src="https://cdn.jsdelivr.net/npm/hexo-butterfly-artitalk-pro/lib/card_visual.js"></script>`
-  
-    //注入容器声明
-    var get_layout
-    //若指定为class类型的容器
-    if (card_data.layout_type === 'class') {
-      //则根据class类名及序列获取容器
-      get_layout = `document.getElementsByClassName('${card_data.layout_name}')[${card_data.layout_index}]`
+<!DOCTYPE html>
+<html lang="zh">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js点击弹窗弹出登录框代码</title>
+ </head>
+ <body>
+  <style>
+   *{ 
+    margin:0;
+    padding:0;
+   }
+         button, input{
+    outline:none;
+   }
+   button, .login{
+    width:120px; 
+    height:42px; 
+    background:#f40; 
+    color:#fff; 
+    border:none; 
+    border-radius:6px;
+    display: block;
+    margin:20px auto; 
+    cursor: pointer;
+   }
+   .popOutBg{
+    width:100%;
+    height:100%;
+    position: fixed;
+    left:0;
+    top:0;
+    background:rgba(0,0,0,.6);
+    display: none;
+   }
+   .popOut{
+    position:fixed;
+    width:600px; 
+    height:300px;
+    top:50%;
+    left:50%;
+    margin-top:-150px;
+    margin-left:-300px;
+    background:#fff;
+    border-radius:8px;
+    overflow: hidden;
+    display: none;
+   }
+   .popOut > span{
+    position: absolute;
+    right:10px;
+    top:0; 
+    height:42px;
+    line-height:42px;
+    color:#000;
+    font-size:30px;
+    cursor: pointer;
+   }
+   .popOut table{
+    display: block;
+    margin:42px auto 0;
+    width:520px;
+   }
+   .popOut caption{
+    width:520px;
+    text-align: center;
+    color:#f40;
+    font-size:18px;
+    line-height:42px;
+   }
+   .popOut table tr td{
+    color:#666;
+    padding:6px;
+    font-size:14px;
+   }
+   .popOut table tr td:first-child{
+    text-align: right;
+   }
+   .inp{
+    width:280px;
+    height:30px;
+    line-height:30px;
+    border:1px solid #999;
+    padding:5px 10px;
+    color:#000;
+    font-size:14px;
+    border-radius:6px;
+   }
+   .inp:focus{ 
+    border-color:#f40;
+   }
+   @keyframes ani{
+    from{
+     transform:translateX(-100%) rotate(-60deg) scale(.5);
     }
-    // 若指定为id类型的容器
-    else if (card_data.layout_type === 'id') {
-      // 直接根据id获取容器
-      get_layout = `document.getElementById('${card_data.layout_name}')`
+    50%{
+     transform:translateX(0) rotate(0) scale(1);
     }
-    // 若未指定容器类型，默认使用id查询
-    else {
-      get_layout = `document.getElementById('${card_data.layout_name}')`
+    90%{
+     transform:translateX(20px) rotate(0) scale(.8);
     }
-    // 挂载容器脚本
-    // 此处还在挂载脚本后面附上了artitalk初始化函数。
-    var user_info_js = `<script data-pjax>
-    function ${pluginname}_injector_config(){
-      var parent_div_git = ${get_layout};
-      var item_html = '${temple_html_text}';
-      console.log('已挂载${pluginname}');
-      parent_div_git.insertAdjacentHTML("afterbegin",item_html);
-      (()=>{
-        const init = () => {
-          new Artitalk(Object.assign({
-            appId: '${card_data.appId}',
-            appKey: '${card_data.appKey}',
-          }, ${card_data.option} ))
-        }
-        if (typeof Artitalk === 'function') {
-          init()
-        } else {
-          getScript('${card_data.js}').then(init)
-        }
-      })()
-      }
-    var elist = '${card_data.exclude}'.split(',');
-    var cpage = location.pathname;
-    var epage = '${card_data.enable_page}';
-    var flag = 0;
-  
-    for (var i=0;i<elist.length;i++){
-      if (cpage.includes(elist[i])){
-        flag++;
-      }
+    to{
+     transform:translateX(0) rotate(0) scale(1);
     }
-  
-    if ((epage ==='all')&&(flag == 0)){
-      ${pluginname}_injector_config();
+   }
+   .ani{ animation:ani .5s ease-in-out;}
+  </style>
+  <button type="button">登录</button>
+  <div class="popOutBg"></div>
+  <div class="popOut">
+   <span title="关闭"> x </span>
+   <div class="box">
+    <h2>登录</h2>
+    <form action="/api/login"  method="POST" onsubmit="return ajax_submit();">
+        <div class="inputbox">
+            <input type="text" id="username" name="username" required="">
+            <label>用户名</label>
+        </div>
+        <div class="inputbox">
+            <input type="password" id="password" name="password" required="">
+            <label>密码</label>
+        </div>
+        <input type="submit" name="" value="确定">
+    </form>
+</div>
+  </div>
+  <script type="text/javascript">
+   function mySelector(param) {
+    if (arguments[1] == true) {
+     return document.querySelectorAll(param);
+    } else {
+     return document.querySelector(param);
     }
-    else if (epage === cpage){
-      ${pluginname}_injector_config();
-    }
-    </script>`
-    // 注入用户脚本
-    // 此处利用挂载容器实现了二级注入
-    hexo.extend.injector.register('body_end', user_info_js, "default");
-    // 注入脚本资源
-    hexo.extend.injector.register('body_end', js_text, "default");
-    // 注入样式资源
-    hexo.extend.injector.register('head_end', css_text, "default");
-  },
-  
-  )
-</script>
+   }
+   function ani() {
+    mySelector(".popOut").className = "popOut ani";
+   }
+   mySelector("button").onclick = function() {
+    mySelector(".popOut").style.display = "block";
+    ani();
+    mySelector(".popOutBg").style.display = "block";
+   };
+   mySelector(".popOut > span").onclick = function() {
+    mySelector(".popOut").style.display = "none";
+    mySelector(".popOutBg").style.display = "none";
+   };
+   mySelector(".popOutBg").onclick = function() {
+    mySelector(".popOut").style.display = "none";
+    mySelector(".popOutBg").style.display = "none";
+   };
+  </script>
+ </body>
+</html>

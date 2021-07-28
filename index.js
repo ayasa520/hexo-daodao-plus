@@ -33,21 +33,31 @@ function common_injector(name, item_config, temple_html_text, js_text, css_text)
         }
         var user_info_js = `<script data-pjax>
         function ${name}_injector_config(){
-            var daodao_url = "${item_config.url}";
+            function ddSwiperInit(){
+                const ddSwiper =new DaodaoSwiper(daodao_url,bbpath,filter);
+                ddSwiper.init();
+            }
+            var daodao_url = "${item_config.url}/api/query/20";
             var bbpath = /${item_config.path}/;
             var filter = JSON.parse('${item_config.filter}');
             var parent_div_git = ${get_layout};
             var item_html =  '${temple_html_text}';
             console.log('已挂载${name}')
             parent_div_git.insertAdjacentHTML("afterbegin",item_html) 
-            daodao_card_init(daodao_url,{"bbpath":bbpath,"filter_daodao":filter})
+            if (typeof DaodaoSwiper === 'function' && typeof Daodao==='function'){
+                ddSwiperInit();
+            }else{
+                let ddScripts = []
+                if(typeof DaodaoSwiper!==\"function\")
+                    ddScripts.push( getScript('${item_config.CDN.js}'))
+                if(typeof Daodao!==\"function\")
+                    ddScripts.push( getScript('https://cdn.jsdelivr.net/npm/daodaoplus@1.0.5/static/js/index.js'))
+                Promise.all(ddScripts).then(ddSwiperInit);
+            }
+
         }
         if( ${get_layout} && (location.pathname ==='${item_config.enable_page}')){
-            if (typeof daodao_card_init === 'function'){
                 ${name}_injector_config()
-            }else{
-                getScript('${item_config.CDN.js}').then(${name}_injector_config);
-            }
         }</script>`
     }
     if (js_text !== '') {
@@ -74,9 +84,9 @@ let temple_html_text = pug.renderFile(path.join(__dirname, './lib/card.pug'),car
 
 if(hexo.config.swiper && hexo.config.swiper.enable){
     var js_text =`<script  src="${config.CDN.js}"></script>`
-    var css_text =`<link rel="stylesheet" href="${config.CDN.css}">`;
+    var css_text =`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daodaoplus@1.0.4/static/css/index.css"><link rel="stylesheet" href="${config.CDN.css}">`;
 }else{
-    var css_text =`<link rel="stylesheet" href="${config.CDN.css}"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">`;
+    var css_text =`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daodaoplus@1.0.4/static/css/index.css"><link rel="stylesheet" href="${config.CDN.css}"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">`;
     var js_text =`<script  src="${config.CDN.js}"></script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>`
 
 }

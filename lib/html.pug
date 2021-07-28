@@ -1,23 +1,53 @@
-div(id="bber")
-    div#loading(style="width:100%;text-align:center")
-        svg( xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="loding" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve")
-            path(fill="#efefef" d="M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3   c-8.4-21.3,2-45.4,23.3-53.8L31.6,3.5z")
-                animateTransform(attributeName="transform" attributeType="XML" type="rotate" dur="2s" from="0 50 50" to="360 50 50" repeatCount="indefinite")
-            path(fill="#efefef" d="M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7   c-6.5-8.8-19-10.6-27.7-4.1L42.3,39.6z")
-                animateTransform(attributeName="transform" attributeType="XML" type="rotate" dur="1s" from="0 50 50" to="-360 50 50" repeatCount="indefinite")
-            path(fill="#efefef" d="M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5   L82,35.7z")
-                animateTransform(attributeName="transform" attributeType="XML" type="rotate" dur="2s" from="0 50 50" to="360 50 50" repeatCount="indefinite")
+#bber
+  #ddloading(style='text-align: center;width: 100%;height: 100%;')
+    svg(xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' viewBox='0 0 100 100' enable-background='new 0 0 100 100' xml:space='preserve')
+      path(fill='#efefef' d='M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3   c-8.4-21.3,2-45.4,23.3-53.8L31.6,3.5z')
+        animatetransform(attributeName='transform' attributeType='XML' type='rotate' dur='2s' from='0 50 50' to='360 50 50' repeatCount='indefinite')
+      path(fill='#efefef' d='M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7   c-6.5-8.8-19-10.6-27.7-4.1L42.3,39.6z')
+        animatetransform(attributeName='transform' attributeType='XML' type='rotate' dur='1s' from='0 50 50' to='-360 50 50' repeatCount='indefinite')
+      path(fill='#efefef' d='M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5   L82,35.7z')
+        animatetransform(attributeName='transform' attributeType='XML' type='rotate' dur='2s' from='0 50 50' to='360 50 50' repeatCount='indefinite')
+  section.timeline.page-1
+    #bbitems.list
+  .dd-actions
+    button.dd-bt.dd-login(type='button') 登录
+    button.dd-bt.dd-create(type='button') 新建
+  .popOutBg
+  .popOut
+    #ddloginbox.box
+      span.logoff(title='关闭')  x 
+      h2 登录
+      form(action='/api/login' method='POST')
+        .inputbox
+          input#username(type='text' name='username' required='')
+          label 用户名
+        .inputbox
+          input#password(type='password' name='password' required='')
+          label 密码
+        input(type='submit' name='' value='确定')
+  .createbox.popOut
+    .createContent
+    .createMain
+      .Input_Box
+        textarea.Input_text
+    .dd-input-foot
+      button.dd-bt.dd-preview 预览
+      button.dd-bt.dd-post 发布
 
 
-script(src="https://unpkg.zhimg.com/art-template@4.13.2/lib/template-web.js") 
 script(data-pjax).
-    function daodao_init(extra){
-        daodao_page_init('#{url}',"<div class=\"list\" id=\"bbitems\">{{each list item index}}<div class=\"item\" id={{item[\"_id\"]}}><p class=\"datatime\">{{item[\"date\"]}}</p><p class=\"datacont\">{{@item[\"content\"]}}</p><p class=\"datafrom\"><small><i class=\"fas fa-tools\"></i>{{item[\"from\"]}}</small></p></div>{{/each}}</div>",extra);      
-    }
-    if (typeof daodao_page_init === 'function')
+    var ddscripts = [];
+    if(typeof marked !== "function")
     {
-        daodao_init(function(){document.getElementById('loading').style.display="none";if(window.location.href.indexOf('#')!=-1)window.location.href=window.location.href});       
+      ddscripts.push(getScript("https://cdn.jsdelivr.net/npm/marked/marked.min.js"));
     }
-    else{
-        getScript('#{js}').then(function(){daodao_init(function(){document.getElementById('loading').style.display="none";if(window.location.href.indexOf('#')!=-1)window.location.href=window.location.href})});     
+    if(typeof template !== "function") 
+    {
+      ddscripts.push(getScript("https://unpkg.com/art-template@4.13.2/lib/template-web.js"));
     }
+    if(typeof Daodao !== "function") 
+    {
+      ddscripts.push(getScript("https://cdn.jsdelivr.net/npm/daodaoplus@1.0.5/static/js/index.js"));
+    }
+    Promise.all(ddscripts).then(function(){window.daodao = new Daodao("#{url}", 20);daodao.init(function(){if(window.location.href.indexOf('#')!=-1)window.location.href=window.location.href});})
+  
