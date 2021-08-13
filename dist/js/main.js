@@ -15,6 +15,7 @@ function DaodaoSwiper(url,bbpath,filter){
         } else {
             array_list_num = 10
         }
+        
         for (let i = 0; i < array_list_num; i++) {
             var flag_daodao = true
             for (let item of ddfilter) {
@@ -23,9 +24,7 @@ function DaodaoSwiper(url,bbpath,filter){
                 }
             }
             if (flag_daodao) {
-                var tempp = document.createElement('p');
-                tempp.innerHTML = array[i].content;
-                array[i].content = tempp.innerText;
+                array[i].content = array[i].content.replace(/<\/?.+?>/g, "");
                 tempp = null;
                 result += `<div class='li-style swiper-slide' ><a style="height=100%;weight=100%" href="${ddpath}#${array[i]._id}">${array[i].content}</a></div>`;
             }

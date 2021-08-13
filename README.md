@@ -27,6 +27,8 @@ daodao_plus:
     title: 闲话板砖
     comments: true
   CDN: 
+	dd_js: https://cdn.jsdelivr.net/npm/daodaoplus@1.1.1/static/js/index.min.js # daodao-kai 避免单纯的改动也要使 hexo-daodao-plus 重新发布
+    dd_css: https://cdn.jsdelivr.net/npm/daodaoplus@1.1.1/static/css/index.min.css
     js: https://cdn.jsdelivr.net/npm/hexo-daodao-plus@2.1.1/dist/js/main.js
     css: https://cdn.jsdelivr.net/npm/hexo-daodao-plus@2.1.1/dist/css/main.css
 ```
@@ -49,3 +51,10 @@ daodao_plus:
 ![image](https://cdn.jsdelivr.net/gh/ayasa520/img@main/0469b9627d2384e678b0a72872f0e0f0.png)
 
 ![image-20210721175549888](https://cdn.jsdelivr.net/gh/ayasa520/img@main/3c049c61ec20f85ec6b29ba9275b5161.png)
+
+ ![Snipaste_2021-08-13_13-37-13.png](https://bu.dusays.com/2021/08/13/3cdb9fe9b2eb5.png)
+
+  ![Snipaste_2021-08-13_13-41-28.png](https://bu.dusays.com/2021/08/13/219eb7c49b0e7.png)
+
+![Snipaste_2021-08-13_13-39-51.png](https://bu.dusays.com/2021/08/13/ec36a8295d64d.png)
+

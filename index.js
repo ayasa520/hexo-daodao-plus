@@ -51,7 +51,7 @@ function common_injector(name, item_config, temple_html_text, js_text, css_text)
                 if(typeof DaodaoSwiper!==\"function\")
                     ddScripts.push( getScript('${item_config.CDN.js}'))
                 if(typeof Daodao!==\"function\")
-                    ddScripts.push( getScript('https://cdn.jsdelivr.net/npm/daodaoplus@1.0.5/static/js/index.js'))
+                    ddScripts.push( getScript('https://cdn.jsdelivr.net/npm/daodaoplus@1.1.0/static/js/index.js'))
                 Promise.all(ddScripts).then(ddSwiperInit);
             }
 
@@ -84,9 +84,9 @@ let temple_html_text = pug.renderFile(path.join(__dirname, './lib/card.pug'),car
 
 if(hexo.config.swiper && hexo.config.swiper.enable){
     var js_text =`<script  src="${config.CDN.js}"></script>`
-    var css_text =`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daodaoplus@1.0.4/static/css/index.css"><link rel="stylesheet" href="${config.CDN.css}">`;
+    var css_text =`<link rel="stylesheet" href="${config.CDN.dd_css}"><link rel="stylesheet" href="${config.CDN.css}">`;
 }else{
-    var css_text =`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daodaoplus@1.0.4/static/css/index.css"><link rel="stylesheet" href="${config.CDN.css}"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">`;
+    var css_text =`<link rel="stylesheet" href="${config.CDN.dd_css}"><link rel="stylesheet" href="${config.CDN.css}"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">`;
     var js_text =`<script  src="${config.CDN.js}"></script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>`
 
 }
@@ -108,6 +108,7 @@ hexo.extend.generator.register('daodao_plus', function (locals) {
     const config = hexo.config.daodao_plus || hexo.theme.config.daodao_plus
     if (!(config && config.enable.page)) return
     const data = {
+        dd_js: config.CDN.dd_js?config.CDN.dd_js:'https://cdn.jsdelivr.net/npm/daodaoplus@latest/static/js/index.min.js',
         url: config.url,
         js: config.CDN.js,
         css: config.CDN.css

@@ -1,8 +1,8 @@
 {
-  "_from": "hexo-daodao-plus@1.0.3",
-  "_id": "hexo-daodao-plus@1.0.3",
+  "_from": "hexo-daodao-plus@2.2.2",
+  "_id": "hexo-daodao-plus@2.2.2",
   "_inBundle": false,
-  "_integrity": "sha1-u5GRfGbFavzLCohzNGh+4NYUdfw=",
+  "_integrity": "sha1-iu+05aUSeq+fA9lfv630w5jpcxM=",
   "_location": "/hexo-daodao-plus",
   "_phantomChildren": {
     "@babel/parser": "7.14.2",
@@ -19,20 +19,20 @@
   "_requested": {
     "type": "version",
     "registry": true,
-    "raw": "hexo-daodao-plus@1.0.2",
+    "raw": "hexo-daodao-plus@2.2.2",
     "name": "hexo-daodao-plus",
     "escapedName": "hexo-daodao-plus",
-    "rawSpec": "1.0.2",
+    "rawSpec": "2.2.2",
     "saveSpec": null,
-    "fetchSpec": "1.0.2"
+    "fetchSpec": "2.2.2"
   },
   "_requiredBy": [
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.nlark.com/hexo-daodao-plus/download/hexo-daodao-plus-1.0.2.tgz",
-  "_shasum": "bb91917c66c56afccb0a887334687ee0d61475fc",
-  "_spec": "hexo-daodao-plus@1.0.2",
+  "_resolved": "https://registry.nlark.com/hexo-daodao-plus/download/hexo-daodao-plus-2.2.2.tgz?cache=0&sync_timestamp=1628856012690&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fhexo-daodao-plus%2Fdownload%2Fhexo-daodao-plus-2.2.2.tgz",
+  "_shasum": "8aefb4e5a5127aaf9f03d95fbfadf4c398e97313",
+  "_spec": "hexo-daodao-plus@2.2.2",
   "_where": "D:\\project\\gitpage\\hexo",
   "author": {
     "name": "ayasa520"
@@ -65,5 +65,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "2.1.1"
+  "version": "2.2.2"
 }
