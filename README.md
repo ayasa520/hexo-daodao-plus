@@ -27,7 +27,7 @@ daodao_plus:
     title: 闲话板砖
     comments: true
   CDN: 
-	dd_js: https://cdn.jsdelivr.net/npm/daodaoplus@1.1.1/static/js/index.min.js # daodao-kai 避免单纯的改动也要使 hexo-daodao-plus 重新发布
+    dd_js: https://cdn.jsdelivr.net/npm/daodaoplus@1.1.1/static/js/index.min.js # daodao-kai 避免单纯的改动也要使 hexo-daodao-plus 重新发布
     dd_css: https://cdn.jsdelivr.net/npm/daodaoplus@1.1.1/static/css/index.min.css
     js: https://cdn.jsdelivr.net/npm/hexo-daodao-plus@2.1.1/dist/js/main.js
     css: https://cdn.jsdelivr.net/npm/hexo-daodao-plus@2.1.1/dist/css/main.css
