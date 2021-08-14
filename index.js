@@ -51,7 +51,7 @@ function common_injector(name, item_config, temple_html_text, js_text, css_text)
                 if(typeof DaodaoSwiper!==\"function\")
                     ddScripts.push( getScript('${item_config.CDN.js}'))
                 if(typeof Daodao!==\"function\")
-                    ddScripts.push( getScript('https://cdn.jsdelivr.net/npm/daodaoplus@1.1.0/static/js/index.js'))
+                    ddScripts.push( getScript('${item_config.CDN.dd_js}'))
                 Promise.all(ddScripts).then(ddSwiperInit);
             }
 
