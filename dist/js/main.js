@@ -33,7 +33,7 @@ function DaodaoSwiper(url,bbpath,filter){
         bbdom.innerHTML = result;
         window.lazyLoadInstance && window.lazyLoadInstance.update();
         window.pjax && window.pjax.refresh(bbdom);
-        var swiper = new Swiper('.swiper-container', {
+        var swiper = new Swiper('.swiper', {
             direction: 'vertical', // 垂直切换选项
             loop: true,
             autoplay: {

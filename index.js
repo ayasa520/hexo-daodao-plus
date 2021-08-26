@@ -86,8 +86,8 @@ if(hexo.config.swiper && hexo.config.swiper.enable){
     var js_text =`<script  src="${config.CDN.js}"></script>`
     var css_text =`<link rel="stylesheet" href="${config.CDN.dd_css}"><link rel="stylesheet" href="${config.CDN.css}">`;
 }else{
-    var css_text =`<link rel="stylesheet" href="${config.CDN.dd_css}"><link rel="stylesheet" href="${config.CDN.css}"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">`;
-    var js_text =`<script  src="${config.CDN.js}"></script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>`
+    var css_text =`<link rel="stylesheet" href="${config.CDN.dd_css}"><link rel="stylesheet" href="${config.CDN.css}"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@7.0.1/swiper-bundle.min.css">`;
+    var js_text =`<script  src="${config.CDN.js}"></script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper@7.0.1/swiper-bundle.min.js"></script>`
 
 }
 temple_html_text =temple_html_text .replace(/\n|\r/g,"")
